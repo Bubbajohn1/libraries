@@ -2487,7 +2487,7 @@ function library:init()
                             end
                             local keyName = 'NONE'
                             self.bind = (keybind and keybind) or keybind or self.bind
-                            if self.bind == Enum.KeyCode.Backspace then
+                            if self.bind == Enum.KeyCode.Backspace or self.bind == Enum.KeyCode.Escape then
                                 self.bind = 'none';
 
                                 if bind.flag then

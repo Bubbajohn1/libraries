@@ -4755,7 +4755,7 @@ function library:CreateSettingsTab(menu)
 
     mainSection:AddButton({text = 'Join Discord', flag = 'joindiscord', confirm = true, callback = function()
         local res = syn.request({
-            Url = 'https://discord.gg/rkRW5VrbWu',
+            Url = 'https://discord.gg/qCUCg5Rfrs',
             Method = 'POST',
             Headers = {
                 ['Content-Type'] = 'application/json',

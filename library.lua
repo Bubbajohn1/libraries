@@ -67,6 +67,7 @@ local library = {
     cheatname = startupArgs.cheatname or 'Clanware';
     gamename = startupArgs.gamename or 'Universal';
     fileext = startupArgs.fileext or '.txt';
+    language = "English";
 }
 
 library.themes = {
@@ -4747,6 +4748,10 @@ function library:CreateSettingsTab(menu)
         end
     end})
 
+    configSection:AddList({text = "Language", values = {"English", "Pусский", "Español"}, callback = function(item)
+        library.language = item
+    end})
+
     refreshConfigs()
 
     mainSection:AddBind({text = 'Open / Close', flag = 'togglebind', nomouse = true, noindicator = true, bind = Enum.KeyCode.End, callback = function()
@@ -4848,6 +4853,10 @@ themeSection:AddList({text = 'Presets', flag = 'preset_theme', values = themeStr
     end
 
     return settingsTab;
+end
+
+function library:set_language(lang)
+    self.language = lang
 end
 
 getgenv().library = library

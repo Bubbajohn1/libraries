@@ -2114,6 +2114,7 @@ function library:init()
                         enabled = true;
                         options = {};
                         objects = {};
+                        toggle = data.toggle;
                     };
 
                     local blacklist = {'objects'};
@@ -2427,12 +2428,13 @@ function library:init()
                             library.options[bind.flag] = bind;
                         end
 
+
                         if bind.bind == 'none' then
                             bind.state = true
                             if bind.flag then
                                 library.flags[bind.flag] = bind.state;
                             end
-                            bind.callback(true)
+                            self:SetState(true, true)
                             local display = bind.state; if bind.invertindicator then display = not bind.state; end
                             bind.indicatorValue:SetEnabled(display and not bind.noindicator);
                             bind.indicatorValue:SetKey((bind.text == nil or bind.text == '') and (bind.flag == nil and 'unknown' or bind.flag) or bind.text); -- this is so dumb
@@ -2484,7 +2486,7 @@ function library:init()
                                 if bind.flag then
                                     library.flags[bind.flag] = false;
                                 end
-                                bind.callback(false);
+                                self:SetState(false, true)
                             end
                             local keyName = 'NONE'
                             self.bind = (keybind and keybind) or keybind or self.bind

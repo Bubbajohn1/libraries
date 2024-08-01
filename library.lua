@@ -2496,7 +2496,7 @@ function library:init()
                                 if bind.flag then
                                     library.flags[bind.flag] = bind.state;
                                 end
-                                self.callback(true)
+                                self:SetState(true, true)
                                 local display = bind.state; if bind.invertindicator then display = not bind.state; end
                                 bind.indicatorValue:SetEnabled(display and not bind.noindicator);
                             else
@@ -2507,7 +2507,7 @@ function library:init()
                                 if bind.flag then
                                     library.flags[bind.flag] = bind.state;
                                 end
-                                self.callback(false)
+                                self:SetState(false, true)
                                 local display = bind.state; if bind.invertindicator then display = not bind.state; end
                                 bind.indicatorValue:SetEnabled(display and not bind.noindicator);
                             end

@@ -2114,7 +2114,6 @@ function library:init()
                         enabled = true;
                         options = {};
                         objects = {};
-                        toggle = data.toggle;
                     };
 
                     local blacklist = {'objects'};
@@ -2428,13 +2427,12 @@ function library:init()
                             library.options[bind.flag] = bind;
                         end
 
-
                         if bind.bind == 'none' then
                             bind.state = true
                             if bind.flag then
                                 library.flags[bind.flag] = bind.state;
                             end
-                            self:SetState(true, true)
+                            bind.callback(true)
                             local display = bind.state; if bind.invertindicator then display = not bind.state; end
                             bind.indicatorValue:SetEnabled(display and not bind.noindicator);
                             bind.indicatorValue:SetKey((bind.text == nil or bind.text == '') and (bind.flag == nil and 'unknown' or bind.flag) or bind.text); -- this is so dumb
@@ -2486,7 +2484,7 @@ function library:init()
                                 if bind.flag then
                                     library.flags[bind.flag] = false;
                                 end
-                                self:SetState(false, true)
+                                bind.callback(false);
                             end
                             local keyName = 'NONE'
                             self.bind = (keybind and keybind) or keybind or self.bind
@@ -2496,7 +2494,7 @@ function library:init()
                                 if bind.flag then
                                     library.flags[bind.flag] = bind.state;
                                 end
-                                self:SetState(true, true)
+                                self.callback(true)
                                 local display = bind.state; if bind.invertindicator then display = not bind.state; end
                                 bind.indicatorValue:SetEnabled(display and not bind.noindicator);
                             else
@@ -2507,7 +2505,7 @@ function library:init()
                                 if bind.flag then
                                     library.flags[bind.flag] = bind.state;
                                 end
-                                self:SetState(false, true)
+                                self.callback(false)
                                 local display = bind.state; if bind.invertindicator then display = not bind.state; end
                                 bind.indicatorValue:SetEnabled(display and not bind.noindicator);
                             end

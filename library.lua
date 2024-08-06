@@ -613,6 +613,7 @@ function library:init()
     makefolder(self.cheatname..'/assets')
     makefolder(self.cheatname..'/'..self.gamename)
     makefolder(self.cheatname..'/'..self.gamename..'/configs');
+    makefolder(self.cheatname..'/'..self.gamename..'/scripts')
 
     function self:SetTheme(theme)
         for i,v in next, theme do
@@ -4748,9 +4749,9 @@ function library:CreateSettingsTab(menu)
         end
     end})
 
-    configSection:AddList({text = "Language", values = {"English", "Pусский", "Español"}, callback = function(item)
-        library.language = item
-    end})
+    -- configSection:AddList({text = "Language", values = {"English", "Pусский", "Español"}, callback = function(item)
+    --     library.language = item
+    -- end})
 
     refreshConfigs()
 
@@ -4857,6 +4858,10 @@ end
 
 function library:set_language(lang)
     self.language = lang
+end
+
+function library:editor()
+    
 end
 
 getgenv().library = library

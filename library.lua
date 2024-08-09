@@ -4864,140 +4864,99 @@ function library:editor()
     
 end
 
-local info = {
-}
+local info = {}
 
 local coreGui = game:GetService("CoreGui")
-local camera = workspace.CurrentCamera
 
-local main = Instance.new("Frame")
-local objects = Instance.new("Frame")
-local title = Instance.new("TextLabel")
-local name = Instance.new("TextLabel")
-local health = Instance.new("TextLabel")
-local UIListLayout = Instance.new("UIListLayout")
-local armor = Instance.new("TextLabel")
-local flags = Instance.new("TextLabel")
 
 function info.object(name, properties)
-    local obj = Instance.new(name)
+    properties = properties or {}
+	local obj = Instance.new(name)
 
-    for i,v in pairs(properties) do
-        obj[i] = v
-    end
+	for i,v in pairs(properties) do
+		obj[i] = v
+	end
 
-    return obj
+	return obj
 end
 
+local main = info.object("Frame")
+local objects = info.object("Frame")
+local UIListLayout = info.object("UIListLayout")
+local UIPadding = info.object("UIPadding")
+local UIStroke = info.object("UIStroke")
+
 function info:init()
-    local drawingUI = info.object("ScreenGui", {
-        Name = "Target",
-        IgnoreGuiInset = true,
-        DisplayOrder = 0x7fffffff,
-        Parent = coreGui
+	local drawingUI = info.object("ScreenGui", {
+		Name = "Target",
+		IgnoreGuiInset = true,
+		DisplayOrder = 0x7fffffff,
+		Parent = coreGui
+	})
+
+	main.Name = "main"
+	main.Parent = drawingUI
+	main.BackgroundColor3 = Color3.new(0.133333, 0.113725, 0.156863)
+	main.BorderColor3 = Color3.new(0.196078, 0.196078, 0.196078)
+	main.BorderSizePixel = 2
+	main.Position = UDim2.new(0.1, 0, 0.5, 0)
+	main.Size = UDim2.new(0, 239, 0, 74)
+	main.Visible = false
+    main.AutomaticSize = Enum.AutomaticSize.Y 
+
+	objects.Name = "objects"
+	objects.Parent = main
+	objects.BackgroundColor3 = Color3.new(1, 1, 1)
+	objects.BackgroundTransparency = 1
+	objects.BorderColor3 = Color3.new(0, 0, 0)
+	objects.BorderSizePixel = 0
+	objects.Size = UDim2.new(1.00000012, 0, 1, 0)
+	
+	UIPadding.Parent = objects
+	UIPadding.PaddingBottom = UDim.new(0, 3)
+
+	UIListLayout.Parent = objects
+	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+    UIStroke.Parent = main
+    UIStroke.Color = Color3.fromRGB(149, 60, 250)
+	UIStroke.Thickness = 1
+end
+
+function info:addtext(text)
+    info.object("TextLabel", {
+        Parent = objects,
+        BackgroundColor3 = Color3.new(1, 1, 1),
+        BackgroundTransparency = 1,
+        BorderColor3 = Color3.new(0, 0, 0),
+        BorderSizePixel = 0,
+        Size = UDim2.new(1, 0, 0, 20),
+        Font = Enum.Font.RobotoMono,
+        Text = text,
+        TextColor3 = Color3.new(0.980392, 0.937255, 1),
+        TextSize = 15,
+        TextStrokeTransparency = 0
     })
 
-    main.Name = "main"
-    main.Parent = drawingUI
-    main.BackgroundColor3 = Color3.new(0.133333, 0.113725, 0.156863)
-    main.BorderColor3 = Color3.new(0.196078, 0.196078, 0.196078)
-    main.BorderSizePixel = 2
-    main.Position = UDim2.new(0.327455908, 0, 0.123343527, 0)
-    main.Size = UDim2.new(0, 239, 0, 74)
-    main.Visible = false
-
-    objects.Name = "objects"
-    objects.Parent = main
-    objects.BackgroundColor3 = Color3.new(1, 1, 1)
-    objects.BackgroundTransparency = 1
-    objects.BorderColor3 = Color3.new(0, 0, 0)
-    objects.BorderSizePixel = 0
-    objects.Size = UDim2.new(1.00000012, 0, 1, 0)
-
-    title.Name = "title"
-    title.Parent = objects
-    title.BackgroundColor3 = Color3.new(1, 1, 1)
-    title.BackgroundTransparency = 1
-    title.BorderColor3 = Color3.new(0, 0, 0)
-    title.BorderSizePixel = 0
-    title.Size = UDim2.new(1, 0, 0.200000003, 0)
-    title.Font = Enum.Font.RobotoMono
-    title.Text = "Target"
-    title.TextColor3 = Color3.new(0.980392, 0.937255, 1)
-    title.TextSize = 15
-    title.TextStrokeTransparency = 0
-
-    name.Name = "name"
-    name.Parent = objects
-    name.BackgroundColor3 = Color3.new(1, 1, 1)
-    name.BackgroundTransparency = 1
-    name.BorderColor3 = Color3.new(0, 0, 0)
-    name.BorderSizePixel = 0
-    name.Size = UDim2.new(1, 0, 0.200000003, 0)
-    name.Font = Enum.Font.RobotoMono
-    name.Text = "name: "
-    name.TextColor3 = Color3.new(0.980392, 0.937255, 1)
-    name.TextSize = 15
-    name.TextStrokeTransparency = 0
-
-    health.Name = "health"
-    health.Parent = objects
-    health.BackgroundColor3 = Color3.new(1, 1, 1)
-    health.BackgroundTransparency = 1
-    health.BorderColor3 = Color3.new(0, 0, 0)
-    health.BorderSizePixel = 0
-    health.Size = UDim2.new(1, 0, 0.200000003, 0)
-    health.Font = Enum.Font.RobotoMono
-    health.Text = "health:"
-    health.TextColor3 = Color3.new(0.980392, 0.937255, 1)
-    health.TextSize = 15
-    health.TextStrokeTransparency = 0
-
-    UIListLayout.Parent = objects
-    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-
-    armor.Name = "armor"
-    armor.Parent = objects
-    armor.BackgroundColor3 = Color3.new(1, 1, 1)
-    armor.BackgroundTransparency = 1
-    armor.BorderColor3 = Color3.new(0, 0, 0)
-    armor.BorderSizePixel = 0
-    armor.Size = UDim2.new(1, 0, 0.200000003, 0)
-    armor.Font = Enum.Font.RobotoMono
-    armor.Text = "armor: "
-    armor.TextColor3 = Color3.new(0.980392, 0.937255, 1)
-    armor.TextSize = 15
-    armor.TextStrokeTransparency = 0
-
-    flags.Name = "flags"
-    flags.Parent = objects
-    flags.BackgroundColor3 = Color3.new(1, 1, 1)
-    flags.BackgroundTransparency = 1
-    flags.BorderColor3 = Color3.new(0, 0, 0)
-    flags.BorderSizePixel = 0
-    flags.Size = UDim2.new(1, 0, 0.200000003, 0)
-    flags.Font = Enum.Font.RobotoMono
-    flags.Text = "flags: "
-    flags.TextColor3 = Color3.new(0.980392, 0.937255, 1)
-    flags.TextSize = 15
-    flags.TextStrokeTransparency = 0
+    main.AutomaticSize = Enum.AutomaticSize.Y 
 end
 
 function info:visible(bool)
-    main.Visible = bool
+	main.Visible = bool
 end
 
 function get_armor(Player)
-    local Object = Player.Character
-    return Object:FindFirstChild("BodyEffects") and Object["BodyEffects"]:FindFirstChild("Armor") and Object["BodyEffects"]:FindFirstChild("Armor").Value
+	local Object = Player.Character
+	return Object:FindFirstChild("BodyEffects") and Object["BodyEffects"]:FindFirstChild("Armor") and Object["BodyEffects"]:FindFirstChild("Armor").Value
 end
 
 function info:update(target: Player)
-    if not target and not target.Character and not target.Character.Humanoid then return error(("Target: %s; is not a valid player"):format(target.Name)) end
-    name.Text   = "name: " .. tostring(target.Name)
-    health.Text = "health: " .. tostring(target.Character.Humanoid.Health)
-    armor.Text  = "armor: " .. tostring(get_armor())
-    flags.Text = "flags: {}"
+	if not target and not target.Character and not target.Character.Humanoid then return error(("Target: %s; is not a valid player"):format(target.Name)) end
+    info:addtext("Target")
+    info:addtext(("name: %s"):format(target.Name))
+    info:addtext(("health: %s"):format(tostring(target.Character.Humanoid.Health)))
+    info:addtext(("armor: %s"):format(tostring(get_armor())))
+    info:addtext(("flags: %s"):format("{}"))
 end
 
 getgenv().library = library
